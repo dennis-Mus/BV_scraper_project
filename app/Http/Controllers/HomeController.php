@@ -96,7 +96,6 @@ class HomeController extends Controller
         print ($newCrawler->evaluate('//*[@id="product-results"]/div[1]/div/a/div/div[2]/div[1]/div[1]/p'))->text();
 
     }
-    
 }
 
 
