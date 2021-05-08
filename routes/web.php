@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,11 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/scrape', 'App\Http\Controllers\HomeController@scrape');
+
+
+
+Route::get('/home', 'App\Http\Controllers\ProductDisplayController@home');
 
 Route::get('/scrapeMe', 'App\Http\Controllers\HomeController@scapeMe');
 

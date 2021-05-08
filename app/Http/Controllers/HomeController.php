@@ -40,7 +40,6 @@ class HomeController extends Controller
     public function scapeMe()
     {
         $this->theproducts = new Products();
-
         // Scraping walmart
         //$this->scrapeTrial1();
 
@@ -58,11 +57,8 @@ class HomeController extends Controller
     
 
         ($this->theproducts)->display();
-
-       
-
-
     }
+
     protected function scrapeFromBestBuy()
     {
         $client = new Client();
