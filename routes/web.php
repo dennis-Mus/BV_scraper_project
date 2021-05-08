@@ -21,3 +21,5 @@ Route::get('/scrape', 'App\Http\Controllers\HomeController@scrape');
 
 Route::get('/scrapeMe', 'App\Http\Controllers\HomeController@scapeMe');
 
+
+

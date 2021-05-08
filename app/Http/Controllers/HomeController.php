@@ -4,6 +4,8 @@
 // https://stackoverflow.com/questions/36673638/how-to-crawl-with-php-goutte-and-guzzle-if-data-is-loaded-by-javascript
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\DbaseProdctsController;
+
 use Illuminate\Http\Request;
 use Goutte\Client;
 
@@ -45,7 +47,20 @@ class HomeController extends Controller
         // Scraping trial 2
         $this->scrapeFromBestBuy();
 
+        $priceDbOps = new DbaseProdctsController();
+        
+        //var_dump( ($this->theproducts)->getScrapedProducts() );
+
+        $toDB =  ($this->theproducts)->getScrapedProducts();
+
+        $priceDbOps->insertAllToDb( $toDB  );
+
+    
+
         ($this->theproducts)->display();
+
+       
+
 
     }
     protected function scrapeFromBestBuy()
@@ -72,8 +87,9 @@ class HomeController extends Controller
 
         for ($i = 0; $i < count($productNames); $i++) 
         {
+            //floatval( trim($prices[$i][1], '$') )
 
-            $product_to_add = new Product( $productNames[$i][1], $prices[$i][1], $url, 'USD', 'TECH' );
+            $product_to_add = new Product( $productNames[$i][1], floatval( trim($prices[$i][1], '$') ), $url, 'CAD', 'TECH' );
             ($this->theproducts)->addProduct( $product_to_add );
 
         }
@@ -115,6 +131,7 @@ class Products
         //Implent removing of product
     }
     
+    // displays products that have been recently scraped 
     public function display()
     {
 
@@ -130,6 +147,13 @@ class Products
         }
         print "</ul>\n</body>\n</html>";
     }
+
+    public function getScrapedProducts()
+    {
+        return $this->product_list;
+    }
+
+    
 
 
 }
@@ -152,5 +176,26 @@ class Product{
         $this->product_type = $product_type;
 
     }
+
+    public function getName()
+    {
+        return $this->product_name;
+    }
+
+    public function getCost()
+    {
+        return $this->product_cost;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
     
 }
